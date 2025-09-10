@@ -1,5 +1,13 @@
 {
-  "name": "Using fixtures to represent data",
-  "email": "hello@cypress.io",
-  "body": "Fixtures are a great way to mock data for responses to routes"
+  "Search": [
+    {
+      "Title": "Harry Potter and the Sorcerer's Stone",
+      "Year": "2001",
+      "imdbID": "tt0241527",
+      "Type": "movie",
+      "Poster": "https://example.com/harry1.jpg"
+    }
+  ],
+  "totalResults": "1",
+  "Response": "True"
 }
