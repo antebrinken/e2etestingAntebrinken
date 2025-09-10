@@ -1,3 +1,4 @@
+
 describe('Movie App (mockad data)', () => {
   beforeEach(() => {
     cy.intercept(
@@ -5,19 +6,30 @@ describe('Movie App (mockad data)', () => {
       'http://omdbapi.com/?apikey=416ed51a&s=Harry*',
       { fixture: 'example.json' }
     ).as('getMovies');
+
     cy.intercept(
       'GET',
       'http://omdbapi.com/?apikey=416ed51a&s=asldkfjalskdfj*',
-      { body: { Response: "False", Error: "Movie not found!" } }
+      { body: { Response: 'False', Error: 'Movie not found!' } }
     ).as('getNoMovies');
+
     cy.visit('http://localhost:5173');
   });
 
-  it('visar sökresultat när man söker på en film (mock)', () => {
+  it('visar sökresultat och kan sortera filmer efter titel A-Ö (mock)', () => {
     cy.get('#searchText').type('Harry Potter');
     cy.get('#searchForm').submit();
     cy.wait('@getMovies');
+
     cy.get('.movie').should('have.length.greaterThan', 0);
+    cy.get('#sortMovies').select('title-asc');
+    cy.get('.movie h3').should('have.length.greaterThan', 0).then($els => {
+      const titles = Cypress.$.makeArray($els).map(
+        el => (el as HTMLElement).innerText.trim().toLowerCase()
+      );
+      const sorted = [...titles].sort((a, b) => a.localeCompare(b));
+      expect(titles).to.deep.equal(sorted);
+    });
   });
 
   it('visar ett felmeddelande om ingen film hittas (mock)', () => {
@@ -44,4 +56,4 @@ describe('Movie App (riktiga API:et)', () => {
     cy.get('#searchForm').submit();
     cy.contains('Inga sökresultat', { timeout: 10000 }).should('exist');
   });
-}); 
+});

@@ -8,10 +8,21 @@
   </head>
   <body>
     <div id="app">
+      
       <form id="searchForm">
         <input type="text" id="searchText" placeholder="Skriv titel här" />
         <button type="submit" id="search">Sök</button>
       </form>
+
+      
+      <select id="sortMovies">
+        <option value="title-asc">Titel A-Ö</option>
+        <option value="title-desc">Titel Ö-A</option>
+        <option value="year-asc">År stigande</option>
+        <option value="year-desc">År fallande</option>
+      </select>
+
+      
       <div id="movie-container"></div>
     </div>
     <script type="module" src="/src/ts/main.ts"></script>
